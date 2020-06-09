@@ -6,10 +6,10 @@ using namespace std;
 class Solution {
 public:
     int findNthDigit(int n) {
-        int i=0, k=0;
+        long long i=0, k=0;
         while (n > k) {
             n -= k;
-            k += pow(10, i) * 9 * (i+1);
+            k = pow(10, i) * 9 * (i+1);
             i++;
         }
 
@@ -32,6 +32,9 @@ int main() {
     cout << s.findNthDigit(9) << " = 9" << endl;
     cout << s.findNthDigit(10) << " = 1" << endl;
     cout << s.findNthDigit(11) << " = 0" << endl;
+    cout << s.findNthDigit(190) << " = 1" << endl;
+    cout << s.findNthDigit(191) << " = 0" << endl;
+    cout << s.findNthDigit(192) << " = 0" << endl;
     cout << s.findNthDigit(128) << " = 6" << endl;
     cout << s.findNthDigit(500) << " = 0" << endl;
     cout << s.findNthDigit(501) << " = 3" << endl;
