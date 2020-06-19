@@ -24,6 +24,9 @@ void output(vector<vector<int>> vv) {
 
 class Solution {
 public:
+    int dx[4] = {0,1,0,-1};
+    int dy[4] = {1,0,-1,0};
+
     typedef priority_queue<vector<int>, vector<vector<int>>, Comp> pq;
 
     void helper(vector<vector<int>>& res, vector<vector<int>>& matrix, pq q) {
@@ -33,34 +36,17 @@ public:
         while (q.size() > 0) {
             auto v = q.top();
             q.pop();
-            int i = v[0], j = v[1];
-            if (i-1 >= 0 && res[i-1][j] == 0) {
-                if (matrix[i-1][j] >= matrix[i][j]) {
-                    vector<int> tmp = {i-1, j, matrix[i-1][j]};
-                    q.push(tmp);
-                    res[i-1][j] = 3;
-                } else res[i-1][j] = 1;
-            }
-            if (i+1 < r && res[i+1][j] == 0) {
-                if (matrix[i+1][j] >= matrix[i][j]) {
-                    vector<int> tmp = {i+1, j, matrix[i+1][j]};
-                    q.push(tmp);
-                    res[i+1][j] = 3;
-                } else res[i+1][j] = 1;
-            }
-            if (j-1 >= 0 && res[i][j-1] == 0) {
-                if (matrix[i][j-1] >= matrix[i][j]) {
-                    vector<int> tmp = {i, j-1, matrix[i][j-1]};
-                    q.push(tmp);
-                    res[i][j-1] = 3;
-                } else res[i][j-1] = 1;
-            }
-            if (j+1 < c && res[i][j+1] == 0) {
-                if (matrix[i][j+1] >= matrix[i][j]) {
-                    vector<int> tmp = {i, j+1, matrix[i][j+1]};
-                    q.push(tmp);
-                    res[i][j+1] = 3;
-                } else res[i][j+1] = 1;
+            for (int i=0; i<4; i++) {
+                int x = v[0] + dx[i];
+                int y = v[1] + dy[i];
+                if (x >= 0 && x < r  && y >= 0 && y < c && res[x][y] == 0) {
+                    if (matrix[x][y] < matrix[v[0]][v[1]]) res[x][y] = 1;
+                    else {
+                        vector<int> tmp  = {x, y, matrix[x][y]};
+                        q.push(tmp);
+                        res[x][y] = 3;
+                    }
+                }
             }
         }
     }
